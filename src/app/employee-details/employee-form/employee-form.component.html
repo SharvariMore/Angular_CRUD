@@ -1,0 +1,125 @@
+<input #checkbox1 type="checkbox" name="toggle" id="toggle">
+<label for="toggle"></label>
+
+<div class="container">
+
+</div>
+
+<div class="formAdd">
+  <form autocomplete="off" #myForm="ngForm" (ngSubmit)="myForm.form.valid && submit(myForm)">  <!--ngform adds validations to all fields && for.valid ensures all fields are not empty-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <input type="hidden" name="id" [value]="emplService.employeeData.id">
+          <label for="name" class="float-left">Name</label>
+          <div class="float-right" *ngIf="name.invalid && (name.touched || name.dirty)">  <!--touched: touched by mouse & dirty: entered something and erased-->
+            <p class="text-danger">Required</p>
+          </div>
+          <input type="text" name="name" class="form-control" placeholder="Enter Name" #name="ngModel" [(ngModel)] = "emplService.employeeData.name" required>    <!--ngModel does 2 way data binding to store object value to be added or edited-->
+        </div>
+
+        <div class="col-md-3">
+          <label for="name" class="float-left">Last Name</label>
+          <div class="float-right" *ngIf="lastname.invalid && (lastname.touched || lastname.dirty)">
+            <p class="text-danger">Required</p>
+          </div>
+          <input type="text" name="lastname" class="form-control" placeholder="Enter Last Name" #lastname="ngModel" [(ngModel)] = "emplService.employeeData.lastName" required>
+        </div>
+
+        <div class="col-md-3">
+          <label for="name" class="float-left">Email</label>
+          <div class="float-right" *ngIf="email.invalid && (email.touched || email.dirty)">
+            <p class="text-danger">Required</p>
+          </div>
+          <input type="email" name="email" class="form-control" placeholder="Enter Email" #email="ngModel" [(ngModel)] = "emplService.employeeData.email" required>
+        </div>
+
+        <div class="col-md-3">
+          <label for="name" class="float-left">Age</label>
+          <div class="float-right" *ngIf="age.invalid && (age.touched || age.dirty)">
+            <p class="text-danger">Required</p>
+          </div>
+          <input type="number" name="age" class="form-control" placeholder="Enter Age" #age="ngModel" [(ngModel)] = "emplService.employeeData.age" required>
+        </div>
+      </div>
+
+      <br/>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="date" class="label float-left">Date of Joining</label>
+          <div class="float-right" *ngIf="doj.invalid && (doj.touched || doj.dirty)">
+            <p class="text-danger">Required</p>
+          </div>
+          <input type="date" name="doj" class="form-control" #doj="ngModel" [(ngModel)] = "emplService.employeeData.doj" required>
+        </div>
+
+        <div class="col-md-3">
+          <label for="designation" class="label float-left">Designation</label>
+          <div class="float-right" *ngIf="designationID.touched && designationID.value==0">
+            <p class="text-danger">Required</p>
+          </div>
+          <select name="designationID" class="form-control" #designationID="ngModel" [(ngModel)] = "emplService.employeeData.designationID">
+            <option value="0">Please Select</option>
+            <option [ngValue]="desgn.id" *ngFor="let desgn of emplService.listDesignation">{{ desgn.designation }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="gender">Gender</label>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="radio" checked="true" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)] = "emplService.employeeData.gender" value="male">
+                  Male
+                </label>
+              </div>
+
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)] = "emplService.employeeData.gender" value="female">
+                  Female
+                </label>
+              </div>
+
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)] = "emplService.employeeData.gender" value="other">
+                  Other
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="isMarried" #isMarried="ngModel" [(ngModel)] = "emplService.employeeData.isMarried">
+                  Married
+                </label>
+              </div>
+
+              <div class="form-check-inline">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="isActive" #isActive="ngModel" [(ngModel)] = "emplService.employeeData.isActive">
+                  Active
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-success btn-block" [disabled]="designationID.value==0">Save</button>
+        </div>
+
+        <div class="col-md-2">
+          <button type="reset" class="btn btn-danger btn-block">Cancel</button>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </form>
+</div>
